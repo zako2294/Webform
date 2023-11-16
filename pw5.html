@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Form</title>
+  <style>
+  <style>
+  /* Add your CSS styles here */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  fieldset {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  input:invalid {
+    border: 1px solid red;
+  }
+
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  #result {
+    margin-top: 20px;
+  }
+</style>
+
+  </style>
+</head>
+<body>
+
+  
+    <form action="result.php" method="post" onsubmit="return validateForm()">
+  
+    <h1>Quiz Form</h1>
+
+    <fieldset>
+      <legend>Student Information</legend>
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" name="fullname" required>
+
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" name="lastname" required>
+
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" name="firstname" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </fieldset>
+
+    <label for="quizDate">Quiz Date:</label>
+    <input type="date" id="quizDate" name="quizDate" required>
+
+    <fieldset>
+      <legend>Single Choice Question</legend>
+      <label><input type="radio" name="singleChoice" value="option1" required> Option 1</label>
+      <label><input type="radio" name="singleChoice" value="option2" required> Option 2</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Multiple Choice Question</legend>
+      <label><input type="checkbox" name="multipleChoice[]" value="option1" required> Option 1</label>
+      <label><input type="checkbox" name="multipleChoice[]" value="option2" required> Option 2</label>
+    </fieldset>
+
+    <label for="selectBox">Single Choice Select Box:</label>
+    <select id="selectBox" name="selectBox" required>
+      <option value="" disabled selected>Select an option</option>
+      <optgroup label="Group 1">
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+      </optgroup>
+      <optgroup label="Group 2">
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+      </optgroup>
+    </select>
+
+    <label for="codeTextarea">Enter HTML or CSS Code:</label>
+    <textarea id="codeTextarea" name="codeTextarea" required></textarea>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+   function validateForm() {
+  // Add your validation logic here
+  // Return true if the form is valid, otherwise return false
+  // For simplicity, this example assumes the form is always valid
+
+  // Get the form data
+  var formData = {
+    fullname: document.getElementById('fullname').value,
+    lastname: document.getElementById('lastname').value,
+    firstname: document.getElementById('firstname').value,
+    email: document.getElementById('email').value,
+    quizDate: document.getElementById('quizDate').value,
+    singleChoice: document.querySelector('input[name="singleChoice"]:checked').value,
+    multipleChoice: Array.from(document.querySelectorAll('input[name="multipleChoice[]"]:checked')).map(el => el.value),
+    selectBox: document.getElementById('selectBox').value,
+    codeTextarea: document.getElementById('codeTextarea').value
+  };
+
+  // Open a new window or tab
+  var newWindow = window.open('', '_blank');
+
+  // Set the result as the content of the new window
+  newWindow.document.write('<pre>' + JSON.stringify(formData, null, 2) + '</pre>');
+
+  // Prevent the form from submitting
+  return false;
+}
+
+  </script>
+
+</body>
+</html>
